@@ -363,6 +363,13 @@ except ValidationError as e:
 
 ---
 
+---
+
+## 💬 讨论
+
+有问题？来 [GitHub Discussions](https://github.com/Zizhenghua/quant-data-sdk/discussions) 提问。
+
+---
 ## 📚 Documentation
 
 - [快速开始](examples/quickstart.py)

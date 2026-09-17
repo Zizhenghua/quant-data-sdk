@@ -270,6 +270,13 @@ https://github.com/Zizhenghua/quant-data-sdk/issues
 
 ---
 
+---
+
+## 💬 Discussions
+
+Questions? Ask on [GitHub Discussions](https://github.com/Zizhenghua/quant-data-sdk/discussions).
+
+---
 ## 📈 Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=Zizhenghua/quant-data-sdk&type=Date)](https://star-history.com/#Zizhenghua/quant-data-sdk&Date)
