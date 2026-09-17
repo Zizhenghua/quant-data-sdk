@@ -4,10 +4,13 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Tests](https://github.com/Zizhenghua/quant-data-sdk/actions/workflows/test.yml/badge.svg)](https://github.com/Zizhenghua/quant-data-sdk/actions/workflows/test.yml)
 [![Python](https://img.shields.io/pypi/pyversions/zizhenghua-quant.svg)](https://pypi.org/project/zizhenghua-quant/)
+[![npm](https://img.shields.io/npm/v/zizhenghua-quant.svg)](https://www.npmjs.com/package/zizhenghua-quant)
 
-Official Python SDK for [Quant Data API](https://zizhenghua.com).
+[English](README_EN.md) | [中文](README.md)
 
-A 股行情、财务、行业、因子数据的官方 Python SDK。
+Official Python & JavaScript SDK for [Quant Data API](https://zizhenghua.com).
+
+A 股行情、财务、行业、因子数据的官方 Python / JavaScript SDK。
 
 ---
 
@@ -18,6 +21,7 @@ A 股行情、财务、行业、因子数据的官方 Python SDK。
 - 🖥️ 自带 CLI（`quant-data` 命令）
 - 📊 pandas 集成（`get_kline_df()` 等）
 - ⚡ 异步支持（`AsyncQuantDataClient`）
+- 📦 JavaScript/TypeScript SDK
 - 🔐 自动处理 API Key 认证
 - 🔁 内置重试、超时、错误处理
 - 📝 完整的类型提示（type hints）
@@ -27,6 +31,8 @@ A 股行情、财务、行业、因子数据的官方 Python SDK。
 ---
 
 ## 📦 Installation
+
+### Python
 
 ```bash
 # 基础
@@ -42,6 +48,12 @@ pip install "zizhenghua-quant[async]"
 pip install "zizhenghua-quant[all]"
 ```
 
+### JavaScript / TypeScript
+
+```bash
+npm install zizhenghua-quant
+```
+
 ---
 
 ## 🚀 Quick Start
@@ -54,7 +66,7 @@ pip install "zizhenghua-quant[all]"
 2. 登录后进入「账号设置」→「API Key 管理」
 3. 点击「+ 创建新 Key」，复制保存（只显示一次）
 
-### 2. 调用
+### 2. Python 调用
 
 ```python
 from quant_data_sdk import QuantDataClient
@@ -68,6 +80,19 @@ client = QuantDataClient(api_key="your_api_key_here")
 # 获取贵州茅台实时行情
 data = client.stock.get_realtime("600519")
 print(data)
+```
+
+### 3. JavaScript 调用
+
+```typescript
+import { QuantDataClient } from 'zizhenghua-quant';
+
+const client = new QuantDataClient({
+  apiKey: 'your_api_key_here',  // 可选
+});
+
+const data = await client.stock.getRealtime('600519');
+console.log(data);
 ```
 
 ---
@@ -245,6 +270,61 @@ quant-data --api-key your_key stock realtime 600519
 
 ---
 
+## 📦 JavaScript/TypeScript SDK
+
+除了 Python SDK，还提供 JS/TS SDK。
+
+### 安装
+
+```bash
+npm install zizhenghua-quant
+```
+
+### 使用
+
+```typescript
+import { QuantDataClient } from 'zizhenghua-quant';
+
+const client = new QuantDataClient({
+  apiKey: 'your_api_key_here',  // 可选，不传则匿名
+});
+
+// 实时行情
+const data = await client.stock.getRealtime('600519');
+
+// K 线
+const kline = await client.stock.getKline('600519', '2024-01-01', '2024-12-31');
+
+// 涨幅榜
+const ranking = await client.stock.getRanking();
+
+// 市场统计
+const stats = await client.market.getStats();
+
+// 行业
+const sectors = await client.sector.getPerformance();
+
+// 财务
+const fin = await client.fin.getLatest('600519');
+
+// 多因子
+const factors = await client.factor.getRanking(20);
+```
+
+### AI 代码生成
+
+```typescript
+const result = await client.ai.generateCode({
+  prompt: '我想查看茅台23年到25年的布林带回测情况',
+  language: 'python',
+});
+
+const code = AIAPI.extractCode(result.raw, 'python');
+console.log(code);
+```
+
+---
+
 ## 📊 限流
 
 | 用户 | 数据接口 | AI 接口 |
@@ -290,6 +370,66 @@ except ValidationError as e:
 - [选股](examples/filter_stocks.py)
 - [AI 生成](examples/ai_generate.py)
 - [API 文档](https://zizhenghua.com/swagger-ui/index.html)
+
+---
+
+## ❓ FAQ
+
+### 1. 匿名能用吗？
+
+能，但限额较低：
+- 数据接口：10 次/分钟，10,000 行/分钟
+- AI 接口：30 次/天
+
+注册后可获得更高限额。
+
+### 2. 怎么拿 API Key？
+
+1. 访问 https://zizhenghua.com 注册
+2. 登录后进入「账号设置」→「API Key 管理」
+3. 点击「+ 创建新 Key」，复制保存
+
+### 3. 支持哪些股票？
+
+A 股全市场（沪深京），包括指数、ETF。
+
+### 4. 数据从哪来？
+
+公开数据源，仅供学习研究。
+
+### 5. 能商用吗？
+
+SDK 是 MIT 协议，可以商用。数据接口有免费额度。
+
+### 6. 报错 `RateLimitError` 怎么办？
+
+- 等 1 分钟
+- 或注册获取更高限额
+- 或加 API Key
+
+### 7. Python 和 JS SDK 有什么区别？
+
+功能基本一致，语言不同：
+- Python：支持 pandas / 异步 / CLI
+- JS/TS：支持 TypeScript 类型
+
+### 8. 支持哪些 Python 版本？
+
+Python 3.8+。
+
+### 9. 支持哪些 Node 版本？
+
+Node 16+。
+
+### 10. 怎么提 issue？
+
+https://github.com/Zizhenghua/quant-data-sdk/issues
+
+---
+
+## 📈 Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Zizhenghua/quant-data-sdk&type=Date)](https://star-history.com/#Zizhenghua/quant-data-sdk&Date)
 
 ---
 
