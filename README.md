@@ -1,9 +1,9 @@
 # Quant Data SDK
 
-[![PyPI](https://img.shields.io/pypi/v/quant-data-sdk.svg)](https://pypi.org/project/quant-data-sdk/)
+[![PyPI](https://img.shields.io/pypi/v/zizhenghua-quant.svg)](https://pypi.org/project/zizhenghua-quant/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Tests](https://github.com/Zizhenghua/quant-data-sdk/actions/workflows/test.yml/badge.svg)](https://github.com/Zizhenghua/quant-data-sdk/actions/workflows/test.yml)
-[![Python](https://img.shields.io/pypi/pyversions/quant-data-sdk.svg)](https://pypi.org/project/quant-data-sdk/)
+[![Python](https://img.shields.io/pypi/pyversions/zizhenghua-quant.svg)](https://pypi.org/project/zizhenghua-quant/)
 
 Official Python SDK for [Quant Data API](https://zizhenghua.com).
 
@@ -26,7 +26,7 @@ A 股行情、财务、行业、因子数据的官方 Python SDK。
 ## 📦 Installation
 
 ```bash
-pip install quant-data-sdk
+pip install zizhenghua-quant
 ```
 
 ---
