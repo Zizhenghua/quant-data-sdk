@@ -20,6 +20,11 @@ class FinAPI:
         """
         return self._client.get(f"/fin/latest/{code}", refresh=refresh)
 
+    def get_latest_df(self, code: str, refresh: bool = False):
+        """最新财务指标 → DataFrame"""
+        from ..utils import to_dataframe
+        return to_dataframe(self.get_latest(code, refresh))
+
     def get_history(
         self,
         code: str,
@@ -33,6 +38,11 @@ class FinAPI:
         :param n: 期数（默认 8，最大 6000）
         """
         return self._client.get(f"/fin/history/{code}", n=n, refresh=refresh)
+
+    def get_history_df(self, code: str, n: int = 8, refresh: bool = False):
+        """财务历史 → DataFrame"""
+        from ..utils import to_dataframe
+        return to_dataframe(self.get_history(code, n, refresh))
 
     def get_top_roe(
         self,
@@ -49,3 +59,10 @@ class FinAPI:
         return self._client.get(
             "/fin/top/roe", limit=limit, minRoe=min_roe, refresh=refresh
         )
+
+    def get_top_roe_df(
+        self, limit: int = 20, min_roe: float = 0, refresh: bool = False
+    ):
+        """ROE 排名 → DataFrame"""
+        from ..utils import to_dataframe
+        return to_dataframe(self.get_top_roe(limit, min_roe, refresh))

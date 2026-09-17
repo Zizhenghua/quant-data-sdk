@@ -31,3 +31,8 @@ class FactorAPI:
         :return: 排名列表
         """
         return self._client.get("/factor/ranking", topN=top_n, refresh=refresh)
+
+    def get_ranking_df(self, top_n: int = 20, refresh: bool = False):
+        """多因子排名 → DataFrame"""
+        from ..utils import to_dataframe
+        return to_dataframe(self.get_ranking(top_n, refresh))

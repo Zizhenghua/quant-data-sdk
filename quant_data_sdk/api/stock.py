@@ -24,6 +24,11 @@ class StockAPI:
         """
         return self._client.get(f"/stock/realtime/{code}")
 
+    def get_realtime_df(self, code: str):
+        """实时行情 → DataFrame"""
+        from ..utils import to_dataframe
+        return to_dataframe(self.get_realtime(code))
+
     # ============================================================
     # K 线
     # ============================================================
@@ -49,6 +54,16 @@ class StockAPI:
             params["endDate"] = end_date
         return self._client.get(f"/stock/detail/{code}", **params)
 
+    def get_kline_df(
+        self,
+        code: str,
+        start_date: Optional[str] = None,
+        end_date: Optional[str] = None,
+    ):
+        """K 线 → DataFrame"""
+        from ..utils import to_dataframe
+        return to_dataframe(self.get_kline(code, start_date, end_date))
+
     # ============================================================
     # PE/PB
     # ============================================================
@@ -61,6 +76,11 @@ class StockAPI:
         :return: 估值指标
         """
         return self._client.get(f"/stock/basic/{code}")
+
+    def get_basic_df(self, code: str):
+        """PE/PB → DataFrame"""
+        from ..utils import to_dataframe
+        return to_dataframe(self.get_basic(code))
 
     # ============================================================
     # 选股
@@ -87,6 +107,11 @@ class StockAPI:
         """
         return self._client.post("/stock/filter", json=filters)
 
+    def filter_stocks_df(self, **filters):
+        """选股 → DataFrame"""
+        from ..utils import to_dataframe
+        return to_dataframe(self.filter_stocks(**filters))
+
     # ============================================================
     # 榜单
     # ============================================================
@@ -95,10 +120,25 @@ class StockAPI:
         """涨幅榜（前 20）"""
         return self._client.get("/stock/ranking", refresh=refresh)
 
+    def get_ranking_df(self, refresh: bool = False):
+        """涨幅榜 → DataFrame"""
+        from ..utils import to_dataframe
+        return to_dataframe(self.get_ranking(refresh))
+
     def get_losers(self, refresh: bool = False) -> List[Dict[str, Any]]:
         """跌幅榜（前 20）"""
         return self._client.get("/stock/losers", refresh=refresh)
 
+    def get_losers_df(self, refresh: bool = False):
+        """跌幅榜 → DataFrame"""
+        from ..utils import to_dataframe
+        return to_dataframe(self.get_losers(refresh))
+
     def get_turnover_ranking(self, refresh: bool = False) -> List[Dict[str, Any]]:
         """换手率榜（前 20）"""
         return self._client.get("/stock/turnover-ranking", refresh=refresh)
+
+    def get_turnover_ranking_df(self, refresh: bool = False):
+        """换手率榜 → DataFrame"""
+        from ..utils import to_dataframe
+        return to_dataframe(self.get_turnover_ranking(refresh))

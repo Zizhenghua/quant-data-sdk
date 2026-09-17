@@ -32,6 +32,8 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+pandas = ["pandas>=1.5.0"]
+async = ["httpx>=0.25.0"]
 dev = [
     "pytest>=7.0",
     "pytest-cov>=4.0",
@@ -39,6 +41,13 @@ dev = [
     "build>=1.0.0",
     "twine>=4.0.0",
 ]
+all = [
+    "pandas>=1.5.0",
+    "httpx>=0.25.0",
+]
+
+[project.scripts]
+quant-data = "quant_data_sdk.cli:main"
 
 [project.urls]
 Homepage = "https://zizhenghua.com"
@@ -61,10 +70,9 @@ line-length = 100
 target-version = "py38"
 
 [tool.ruff.lint]
-# 忽略以下规则（都是风格问题，不影响功能）
 ignore = [
-    "FA100",   # 建议加 from __future__ import annotations
-    "I001",    # import 顺序
-    "RUF013",  # 隐式 Optional
-    "PIE790",  # 不必要的 pass
+    "FA100",
+    "I001",
+    "RUF013",
+    "PIE790",
 ]
