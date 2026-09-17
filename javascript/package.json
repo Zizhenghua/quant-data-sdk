@@ -1,0 +1,37 @@
+{
+  "name": "zizhenghua-quant",
+  "version": "1.0.0",
+  "description": "Official JavaScript/TypeScript SDK for Quant Data API (A-share market data)",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "quant",
+    "stock",
+    "a-share",
+    "finance",
+    "api"
+  ],
+  "author": "Zizhenghua",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Zizhenghua/quant-data-sdk.git",
+    "directory": "javascript"
+  },
+  "homepage": "https://zizhenghua.com",
+  "dependencies": {
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.0"
+  },
+  "files": [
+    "dist"
+  ]
+}

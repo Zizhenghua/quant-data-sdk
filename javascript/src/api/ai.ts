@@ -25,10 +25,11 @@ export class AIAPI {
 
   static extractCode(raw: string, language: string = 'python'): string {
     if (!raw) return '';
-    const marker = `\`\`\`${language}`;
+    let marker = `\`\`\`${language}`;
     let start = raw.indexOf(marker);
     if (start < 0) {
-      start = raw.indexOf('```');
+      marker = '```';
+      start = raw.indexOf(marker);
       if (start < 0) return raw.trim();
     }
     const codeStart = raw.indexOf('\n', start) + 1;

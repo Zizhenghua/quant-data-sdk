@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+﻿import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import {
   QuantDataError,
   AuthenticationError,

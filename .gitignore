@@ -55,3 +55,8 @@ backtest.py
 
 # ===== setuptools =====
 *.egg-info/
+
+# JavaScript
+javascript/node_modules/
+javascript/dist/
+javascript/test.js
