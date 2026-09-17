@@ -46,3 +46,12 @@ Thumbs.db
 bollinger_backtest.py
 ma_cross_backtest.py
 *_backtest.py
+
+# ===== ÏîÄ¿ =====
+kline*.csv
+*.csv
+backtest.py
+*_backtest.py
+
+# ===== setuptools =====
+*.egg-info/

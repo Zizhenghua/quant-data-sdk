@@ -15,6 +15,9 @@ A 股行情、财务、行业、因子数据的官方 Python SDK。
 
 - 🚀 一行代码获取 A 股数据
 - 🤖 AI 代码生成（自然语言 → 策略代码）
+- 🖥️ 自带 CLI（`quant-data` 命令）
+- 📊 pandas 集成（`get_kline_df()` 等）
+- ⚡ 异步支持（`AsyncQuantDataClient`）
 - 🔐 自动处理 API Key 认证
 - 🔁 内置重试、超时、错误处理
 - 📝 完整的类型提示（type hints）
@@ -26,7 +29,17 @@ A 股行情、财务、行业、因子数据的官方 Python SDK。
 ## 📦 Installation
 
 ```bash
+# 基础
 pip install zizhenghua-quant
+
+# 带 pandas（DataFrame 支持）
+pip install "zizhenghua-quant[pandas]"
+
+# 带异步（httpx）
+pip install "zizhenghua-quant[async]"
+
+# 全部
+pip install "zizhenghua-quant[all]"
 ```
 
 ---
@@ -90,6 +103,40 @@ fin = client.fin.get_latest("600519")
 ranking = client.factor.get_ranking(topN=20)
 ```
 
+### pandas 集成
+
+```python
+# K 线 → DataFrame
+df = client.stock.get_kline_df("600519", "2024-01-01", "2024-12-31")
+df["ma5"] = df["close"].rolling(5).mean()
+df["ma20"] = df["close"].rolling(20).mean()
+
+# 涨幅榜 → DataFrame
+df = client.stock.get_ranking_df()
+
+# 行业 → DataFrame
+df = client.sector.get_performance_df()
+```
+
+### 异步
+
+```python
+import asyncio
+from quant_data_sdk import AsyncQuantDataClient
+
+async def main():
+    async with AsyncQuantDataClient() as client:
+        results = await asyncio.gather(
+            client.stock.get_realtime("600519"),
+            client.stock.get_realtime("601318"),
+            client.stock.get_realtime("300750"),
+        )
+        for r in results:
+            print(r["name"], r["latestPrice"])
+
+asyncio.run(main())
+```
+
 ### AI 代码生成
 
 ```python
@@ -125,6 +172,75 @@ client = QuantDataClient(
     api_key="your_key",
     base_url="http://127.0.0.1:8080/api"
 )
+```
+
+---
+
+## 🖥️ CLI
+
+安装后自带 `quant-data` 命令行工具。
+
+### 数据查询
+
+```bash
+# 实时行情
+quant-data stock realtime 600519
+
+# 批量
+quant-data stock realtime 600519 601318 001359
+
+# K 线
+quant-data stock kline 600519 --start 2024-01-01 --end 2024-12-31
+
+# 涨幅榜
+quant-data stock ranking
+
+# 选股
+quant-data stock filter --min-turnover 5 --min-roe 15 --limit 20
+
+# 市场统计
+quant-data market stats
+
+# 行业涨跌幅
+quant-data sector performance
+
+# 财务指标
+quant-data fin latest 600519
+
+# 多因子排名
+quant-data factor ranking --top 5
+```
+
+### 导出文件
+
+```bash
+# 导出 K 线为 CSV
+quant-data stock kline 600519 --start 2024-01-01 --end 2024-12-31 -o kline.csv
+
+# 导出涨幅榜为 JSON
+quant-data stock ranking -o ranking.json
+
+# `-o` 可以放任意位置
+quant-data -o ranking.json stock ranking
+```
+
+### AI 生成
+
+```bash
+# 生成策略代码
+quant-data ai generate "写一个双均线策略"
+
+# 保存到文件
+quant-data ai generate "写一个双均线策略" -o backtest.py
+
+# Java 版本
+quant-data ai generate "写一个双均线策略" --language java -o Backtest.java
+```
+
+### 用 API Key
+
+```bash
+quant-data --api-key your_key stock realtime 600519
 ```
 
 ---
