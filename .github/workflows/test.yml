@@ -7,7 +7,8 @@ on:
     branches: [main]
 
 jobs:
-  test:
+  # ===== Python 测试 =====
+  test-python:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -33,3 +34,34 @@ jobs:
 
       - name: Test with pytest
         run: pytest tests/ -v --cov=quant_data_sdk --cov-report=term-missing
+
+  # ===== JavaScript 测试 =====
+  test-javascript:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: javascript/package-lock.json
+
+      - name: Install dependencies
+        working-directory: javascript
+        run: npm ci
+
+      - name: Build (TypeScript compile)
+        working-directory: javascript
+        run: npm run build
+
+      - name: Verify dist output
+        working-directory: javascript
+        run: |
+          ls dist/
+          test -f dist/index.js
+          test -f dist/index.d.ts
+          test -f dist/client.js
+          test -f dist/client.d.ts
