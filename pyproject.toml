@@ -59,3 +59,12 @@ python_functions = ["test_*"]
 [tool.ruff]
 line-length = 100
 target-version = "py38"
+
+[tool.ruff.lint]
+# 忽略以下规则（都是风格问题，不影响功能）
+ignore = [
+    "FA100",   # 建议加 from __future__ import annotations
+    "I001",    # import 顺序
+    "RUF013",  # 隐式 Optional
+    "PIE790",  # 不必要的 pass
+]

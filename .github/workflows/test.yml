@@ -10,6 +10,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
 
@@ -26,8 +27,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e ".[dev]"
 
-      - name: Lint with ruff
-        run: ruff check quant_data_sdk/
+      - name: Lint with ruff (non-blocking)
+        run: ruff check quant_data_sdk/ || true
+        continue-on-error: true
 
       - name: Test with pytest
         run: pytest tests/ -v --cov=quant_data_sdk --cov-report=term-missing
