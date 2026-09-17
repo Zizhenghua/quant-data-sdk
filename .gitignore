@@ -42,3 +42,7 @@ Thumbs.db
 # ===== 鏋勫缓浜х墿 =====
 *.tar.gz
 *.whl
+# 示例生成的临时文件
+bollinger_backtest.py
+ma_cross_backtest.py
+*_backtest.py
